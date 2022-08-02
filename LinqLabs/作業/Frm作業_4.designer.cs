@@ -61,7 +61,6 @@ namespace LinqLabs.作業
             this.productsTableAdapter1 = new LinqLabs.NWDataSetTableAdapters.ProductsTableAdapter();
             this.ordersTableAdapter1 = new LinqLabs.NWDataSetTableAdapters.OrdersTableAdapter();
             this.categoriesTableAdapter1 = new LinqLabs.NWDataSetTableAdapters.CategoriesTableAdapter();
-            this.ordersTableAdapter2 = new LinqLabs.NWDataSetTableAdapters.OrdersTableAdapter();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
@@ -263,7 +262,6 @@ namespace LinqLabs.作業
             this.dataGridView1.RowTemplate.Height = 24;
             this.dataGridView1.Size = new System.Drawing.Size(390, 218);
             this.dataGridView1.TabIndex = 71;
-            this.dataGridView1.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_RowEnter);
             // 
             // tableLayoutPanel1
             // 
@@ -461,10 +459,6 @@ namespace LinqLabs.作業
             // 
             this.categoriesTableAdapter1.ClearBeforeFill = true;
             // 
-            // ordersTableAdapter2
-            // 
-            this.ordersTableAdapter2.ClearBeforeFill = true;
-            // 
             // Frm作業_4
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -526,6 +520,5 @@ namespace LinqLabs.作業
         private NWDataSetTableAdapters.OrdersTableAdapter ordersTableAdapter1;
         private NWDataSetTableAdapters.CategoriesTableAdapter categoriesTableAdapter1;
         private System.Windows.Forms.Label label2;
-        private NWDataSetTableAdapters.OrdersTableAdapter ordersTableAdapter2;
     }
 }

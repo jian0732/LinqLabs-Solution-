@@ -31,7 +31,6 @@ namespace LinqLabs.作業
         {
             this.components = new System.ComponentModel.Container();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.label1 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.comboBox3 = new System.Windows.Forms.ComboBox();
             this.label8 = new System.Windows.Forms.Label();
@@ -55,6 +54,7 @@ namespace LinqLabs.作業
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.awDataSet11 = new LinqLabs.AWDataSet1();
             this.productPhotoTableAdapter1 = new LinqLabs.AWDataSet1TableAdapters.ProductPhotoTableAdapter();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -104,16 +104,6 @@ namespace LinqLabs.作業
             this.splitContainer1.SplitterWidth = 3;
             this.splitContainer1.TabIndex = 136;
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("微軟正黑體", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.label1.Location = new System.Drawing.Point(516, 150);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(86, 24);
-            this.label1.TabIndex = 137;
-            this.label1.Text = "顯示比數";
-            // 
             // label10
             // 
             this.label10.AutoSize = true;
@@ -128,17 +118,11 @@ namespace LinqLabs.作業
             // 
             this.comboBox3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Items.AddRange(new object[] {
-            "1998",
-            "1999",
-            "2000",
-            "2001",
-            "2002",
-            "2003"});
             this.comboBox3.Location = new System.Drawing.Point(361, 122);
             this.comboBox3.Name = "comboBox3";
             this.comboBox3.Size = new System.Drawing.Size(119, 20);
             this.comboBox3.TabIndex = 135;
+            this.comboBox3.SelectedIndexChanged += new System.EventHandler(this.comboBox3_SelectedIndexChanged);
             // 
             // label8
             // 
@@ -163,7 +147,6 @@ namespace LinqLabs.作業
             this.comboBox2.Name = "comboBox2";
             this.comboBox2.Size = new System.Drawing.Size(119, 20);
             this.comboBox2.TabIndex = 131;
-            this.comboBox2.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged);
             // 
             // dateTimePicker2
             // 
@@ -308,7 +291,6 @@ namespace LinqLabs.作業
             this.dataGridView1.RowTemplate.Height = 74;
             this.dataGridView1.Size = new System.Drawing.Size(380, 317);
             this.dataGridView1.TabIndex = 71;
-            this.dataGridView1.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_RowEnter);
             // 
             // tableLayoutPanel2
             // 
@@ -354,6 +336,16 @@ namespace LinqLabs.作業
             // productPhotoTableAdapter1
             // 
             this.productPhotoTableAdapter1.ClearBeforeFill = true;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("微軟正黑體", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.label1.Location = new System.Drawing.Point(491, 156);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(72, 24);
+            this.label1.TabIndex = 137;
+            this.label1.Text = "有幾筆:";
             // 
             // Frm作業_2
             // 

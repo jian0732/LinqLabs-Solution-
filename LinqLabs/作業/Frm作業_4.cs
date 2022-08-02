@@ -15,232 +15,157 @@ namespace LinqLabs.作業
         public Frm作業_4()
         {
             InitializeComponent();
-            productsTableAdapter1.Fill(nwDataSet1.Products);
-            ordersTableAdapter1.Fill(nwDataSet1.Orders);
-            categoriesTableAdapter1.Fill(nwDataSet1.Categories);
+            this.productsTableAdapter1.Fill(nwDataSet1.Products);
+            this.ordersTableAdapter1.Fill(nwDataSet1.Orders);
 
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-
+            //int[] nums = { 1,2,3, 4, 5,6,7,8,9};
+            //int[] TT = { 123, 456, 78910 };
+            //nums.Sp;
         }
+        System.IO.DirectoryInfo dir = new System.IO.DirectoryInfo(@"c:\windows");
 
         private void button38_Click(object sender, EventArgs e)
         {
-            System.IO.DirectoryInfo dir = new System.IO.DirectoryInfo(@"c:\windows");
-
             System.IO.FileInfo[] files = dir.GetFiles();
-
-            IEnumerable<IGrouping<string, System.IO.FileInfo>> q = from n in files
-                                                                   group n by n.Length > 1000 ? "大" : "小";
-            dataGridView1.DataSource = q.ToList();
-
-            //==================
-            foreach (var 大小 in q)
+            var q = from n in files
+                    group n by 分類方法((int)n.Length) into pk
+                    select new { KY = pk.Key, MY = pk };
+            foreach (var x in q)
             {
-                TreeNode x = this.treeView1.Nodes.Add(大小.Key.ToString());
-                foreach (var item in 大小)
+                string s = $"{x.KY}";
+                TreeNode P = this.treeView1.Nodes.Add(s);// (x.Key.ToString());
+                foreach (var o in x.MY)
                 {
-                    x.Nodes.Add(item.ToString());
+                    P.Nodes.Add(o.ToString());
                 }
-
-
-
             }
-
-
         }
-        private string MyPrice(decimal a)
+        string 分類方法(int p)
         {
-            if (a < 30)
-                return "低";
-            else if (a < 50)
-                return "中";
-            else
-                return "高價";
+            if (p > 1000)
+                return "大";
+            else return "小";
+        }
+        string 價格分類(decimal p)
+        {
+            if (p < 30)
+                return "低價位";
+            else if (p < 50)
+                return "中價位";
+            else return "高價位";
         }
         private void button8_Click(object sender, EventArgs e)
         {
-
-            var q = from n in dbcontext.Products.AsEnumerable()
-                    group n by MyPrice(Convert.ToDecimal(n.UnitPrice)) into g
-                    select new { Mykey = g.Key, 產品名稱 = g.Select(n => n.ProductName) };
-            dataGridView1.DataSource = q.ToList();
-            //var q = from n in nwDataSet1.Products
-            //        group n by MyPrice((int)n.UnitPrice) into g
-            //        select new { Mykey=g.Key, Mycount = g.Count(),Mygroup=g };
-
-            //dataGridView1.DataSource = q.ToList();
-            //===================================
-            foreach (var cc in q)
+            dataGridView1.Columns.Clear();
+            treeView1.Nodes.Clear();
+            var q = from n in nwDataSet1.Products.AsEnumerable()
+                    group n by 價格分類(n.UnitPrice) into pk
+                    select new { KY = pk.Key, 產品名稱 = pk.Select(n => n.ProductName) };
+            foreach (var x in q)
             {
-                string s = $"{cc.Mykey}";
-                TreeNode x = this.treeView1.Nodes.Add(s);
-                foreach (var item in cc.產品名稱)
+                string s = $"{x.KY}";
+                TreeNode P = this.treeView1.Nodes.Add(s);// (x.Key.ToString());
+                foreach (var o in x.產品名稱)
                 {
-                    x.Nodes.Add(item.ToString());
+                    P.Nodes.Add(o.ToString());
                 }
             }
-
         }
-
-
-
-
-
-
-
-
-
-
-
 
         private void button6_Click(object sender, EventArgs e)
         {
-            System.IO.DirectoryInfo dir = new System.IO.DirectoryInfo(@"c:\windows");
-
             System.IO.FileInfo[] files = dir.GetFiles();
-
-            IEnumerable<IGrouping<string, System.IO.FileInfo>> q = from n in files
-                                                                   group n by n.CreationTime.Year < 2020 ? "2020前資料" : "2020後資料";
-            dataGridView1.DataSource = q.ToList();
-
-            //==================
-            foreach (var 大小 in q)
+            var q = from n in files
+                    group n by n.CreationTime.Year into pk
+                    select new { KY = pk.Key, MY = pk };
+            foreach (var x in q)
             {
-                TreeNode x = this.treeView1.Nodes.Add(大小.Key.ToString());
-                foreach (var item in 大小)
+                string s = $"{x.KY}";
+                TreeNode P = this.treeView1.Nodes.Add(s);// (x.Key.ToString());
+                foreach (var o in x.MY)
                 {
-                    x.Nodes.Add(item.ToString());
+                    P.Nodes.Add(o.ToString());
                 }
             }
         }
+
+
 
         private void button15_Click(object sender, EventArgs e)
         {
             var q = from n in nwDataSet1.Orders
-                    group n by n.OrderDate.Year into g
-                    select new { Order = g.Key, Count = g.Count(), Mygroup = g };
-            dataGridView1.DataSource = q.ToList();
-
-            //================
-            foreach (var group in q)
-            {
-                string s = $"{group.Order}({group.Count})";
-                TreeNode x = treeView1.Nodes.Add(s);
-                foreach (var item in group.Mygroup)
-                {
-                    x.Nodes.Add(item.ToString());
-                }
-            }
+                    group n by n.OrderDate.Year into pk
+                    select new { KY = pk.Key, 年筆數 = pk.Count() };
+            this.dataGridView2.DataSource = q.ToList();
         }
 
         private void button10_Click(object sender, EventArgs e)
         {
-            var q = from n in nwDataSet1.Orders
-
-                    group n by n.OrderDate.Year into g
-
-                    orderby g.Key
-                    select new { 年 = g.Key, Count = g.Count() };
-            //=====
-            var m = from n in nwDataSet1.Orders
-
-                    group n by n.OrderDate.Month into g
-
-                    orderby g.Key
-                    select new { 年 = g.Key, Count = g.Count() };
-            dataGridView2.DataSource = m.ToList();
-            dataGridView1.DataSource = q.ToList();
-        }
-        int _position = -1;
-        private void dataGridView1_RowEnter(object sender, DataGridViewCellEventArgs e)
-        {
-            _position = e.RowIndex;
-        }
-
-        private void button11_Click(object sender, EventArgs e)
-        {
-            if (_position < 0)
-                return;
-
-
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            var q = dbcontext.Order_Details.Select(n => n.UnitPrice * n.Quantity * (1 - (int)n.Discount)).Sum();
-            //(((double)UnitPrice*Quantity*(1-Discount)))
-            MessageBox.Show($"{q:C2}");
-
-
-
-
-
-
-        }
-        NorthwindEntities dbcontext = new NorthwindEntities();
-        private void button9_Click(object sender, EventArgs e)
-        {
-            var q = from n in nwDataSet1.Categories join p in nwDataSet1.Products on n.CategoryID equals p.CategoryID
-
-                    orderby p.UnitPrice descending
-
-                    select new { n.CategoryName, p.UnitPrice};
-                    
-                      
-
-                 
-            dataGridView1.DataSource = q.Take(5).ToList();
-
-            //var q = from n in dbcontext.Products.AsEnumerable()
-            //        group n by MyPrice(Convert.ToDecimal(n.UnitPrice)) into g
-            //        select new { Mykey = g.Key, 產品名稱 = g.Select(n => n.ProductName) };
-            //dataGridView1.DataSource = q.ToList();
-
-
-
-
-
-
-            //var q = dbcontext.Categories.OrderByDescending(n => n.CategoryName).Take(5);
-
-
-
-            //dataGridView1.DataSource = q.ToList();
-
-
-        }
-
-        private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
-        {
-
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            var q = from n in dbcontext.Order_Details.AsEnumerable()
-                    group n by n.OrderID into g
-                    
-                    select new { g.Key, 總金額 = g.Select(n => n.Quantity * n.UnitPrice * (1 - (int)n.Discount)).Sum() };
-            dataGridView1.DataSource = q.OrderByDescending(n => n.總金額).Take(5).ToList();
-            //dbcontext.Order_Details.Select(n => n.UnitPrice * n.Quantity * (1 - (int)n.Discount)).Sum().Equals.
-
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            var q = from n in dbcontext.Products
-                    where n.UnitPrice > 300
-                    select n;
-            
-            if (q.Count()==0)
+            var q = from n in nwDataSet1.Orders.AsEnumerable()
+                    group n by n.OrderDate.Year into pk
+                    select new { KY = pk.Key, 月份 = pk, };
+            this.dataGridView2.DataSource = q.ToList();
+            foreach (var x in q)
             {
-                MessageBox.Show("沒有");
+                string s = $"{x.KY}";
+                TreeNode 年分
+                    = this.treeView1.Nodes.Add(s);// (x.Key.ToString());
+                foreach (var o in x.月份.Select(n => n.OrderDate.Month).Distinct())
+                {
+                    TreeNode 月份 = 年分.Nodes.Add(o.ToString());
+                    foreach (var G in x.月份.Select(n => n.CustomerID).Distinct())
+                    {
+                        月份.Nodes.Add(G.ToString());
+                    }
+                }
+            }
+        }
+            private void button2_Click(object sender, EventArgs e)
+            {
+            var q = dbcontext.Order_Details.Select(n => (n.UnitPrice * n.Quantity * 1 - (int)n.Discount)).Sum();
+            MessageBox.Show($"{q:c2}".ToString());
+
+              }
+            NorthwindEntities dbcontext = new NorthwindEntities();
+            private void button9_Click(object sender, EventArgs e)
+            {
+            var q = from n in this.dbcontext.Products.AsEnumerable()
+
+                    group n by n.Category.CategoryName into g
+                    select new { 類別名稱 = g.Key, 最高單價 = g.Max(Q => Q.UnitPrice) };
+            dataGridView1.DataSource = q.OrderByDescending(n => n.最高單價).Take(5).ToList();
+        }
+
+            private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
+            {
+
             }
 
+            private void button1_Click(object sender, EventArgs e)
+            {
+            //List<Point> point = new {12,123 };
+            var q = from p in this.dbcontext.Order_Details
+                    group p by p.OrderID into g
+                    select new { CategoryID = g.Key, 銷售業績 = g.Sum(p => p.UnitPrice * p.Quantity * 1 - (int)p.Discount) };
+            dataGridView2.DataSource = q.OrderByDescending(n => n.銷售業績).Take(5).ToList();
 
-        }
+             }
+
+            private void button3_Click(object sender, EventArgs e)
+            {
+            var q = from n in this.dbcontext.Products
+                    where n.UnitPrice > 300
+                    select n;
+            if (q.Count() == 0)
+                MessageBox.Show("沒有價格超過300");
+            else
+                MessageBox.Show("有喔");
+             }
+        
     }
 }
+

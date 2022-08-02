@@ -20,15 +20,11 @@ namespace Starter
         }
         NorthwindEntities dbcontext = new NorthwindEntities();
         private void button1_Click(object sender, EventArgs e)
-        {
-           
-
+        {        
             var q = from a in dbcontext.Products
                     where a.UnitPrice > 30
                     select a;
-
             dataGridView1.DataSource = q.ToList();
-
         }
 
         private void button2_Click(object sender, EventArgs e)
